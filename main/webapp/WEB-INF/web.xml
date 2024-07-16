@@ -9,14 +9,6 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
-  <servlet>
-    <description></description>
-    <display-name>ExP01</display-name>
-    <servlet-name>ExP01</servlet-name>
-    <servlet-class>ch05.ExP01</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ExP01</servlet-name>
-    <url-pattern>/exp01</url-pattern>
-  </servlet-mapping>
+
+
 </web-app>
