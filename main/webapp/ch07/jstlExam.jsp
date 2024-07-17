@@ -23,7 +23,8 @@
 <!-- set(jstl태그) : 내장객체 setAttribute() 메서드 사용과 동일 -->
 <c:set var="product1" value="<b>애플 아이폰</b>" />
 <c:set var="product2" value="삼성 갤럭시 노트" />
-<c:set var="intArray" value="${[1, 2, 3, 4, 5]}" /> <!--  에러 표시돼도 무시 -->
+<!-- <c:set var="intArray" value="${[1, 2, 3, 4, 5]}" />   에러 표시돼도 무시 -->
+<fmt:parseNamber value="[1,2,3,4,5]" var ="interArray" type="number" intergerOnly="true" />
 <p>
    product1(jstl):
    <c:out value="${product1}" default="Not registered" escapeXml="true" />

@@ -18,9 +18,9 @@ public class ProductController extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
 
-    	super.init(config);
-    	service = new ProductService();
-    }
+    	super.init(config);				//****  생명주기
+    	service = new ProductService(); //    DI=>@어노테이션만 쓰면  A a = new A() 필요없이 위에서 ProductService service; 만 있으면 인스턴스 생성 가능
+    }									// DI(Dependency Injection)
     
     @Override
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
