@@ -11,14 +11,14 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.beanutils.BeanUtils;  //없으면 populate 함수 오류남
 
-@WebServlet("/studentControl")
-public class StudentController extends HttpServlet {
+@WebServlet("/studentControl2")
+public class StudentController2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    StudentDAO dao;
+    StudentService service;
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		dao = new StudentDAO();
+		service = new StudentService();
 	}
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -27,7 +27,7 @@ public class StudentController extends HttpServlet {
 		String view = "";
 		
 		if(action == null) {
-			getServletContext().getRequestDispatcher("/studentControl?action=list")
+			getServletContext().getRequestDispatcher("/studentControl2?action=list")
 			.forward(request, response);
 		}else {
 			switch(action) {
@@ -41,8 +41,8 @@ public class StudentController extends HttpServlet {
 	}
 	
 	public String list(HttpServletRequest request, HttpServletResponse response) {
-		request.setAttribute("students", dao.getAll());  // 리스트에 입력 추가
-		return "studentInfo.jsp";
+		request.setAttribute("students", service.getAll());  // 리스트에 입력 추가
+		return "studentInfo2.jsp";
 	}
 
 	public String insert(HttpServletRequest request, HttpServletResponse response) {
@@ -53,7 +53,7 @@ public class StudentController extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		dao.insert(s);//읽어온 정보 insert에 보내줌
+		service.insert(s);//읽어온 정보 insert에 보내줌
 		
 		return list(request, response);
 	}
