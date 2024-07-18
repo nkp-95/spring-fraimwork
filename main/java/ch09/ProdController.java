@@ -57,7 +57,7 @@ public class ProdController extends HttpServlet {
 		}
 		dao.update(p);
 		
-		return list(request, response);
+		return "productInfo.jsp";
 	}
 
 	//제품 리스트
