@@ -92,29 +92,24 @@ public class productDAO {
 	}
 	
 	public void update(Product product){
-		
-		open();
-		Product p = new Product();
-		String sql = "UPDATE product SET(itemname, maker, price, regdate) WHERE ID=? values(?, ?, ?, ?)";
-		
-		try {
-			
-			//String sql = "UPDATE PRODUCT SET ITEMNAME = '%s',  MAKER='%s', PRICE='%s', REGDATE='%s' WHERE ID='%s';";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, product.getId());
-			pstmt.setString(2, product.getItemname());
-			pstmt.setString(3, product.getMaker());
-			pstmt.setInt(4, product.getPrice());
-			pstmt.setDate(5, product.getRegdate());
-			
-			pstmt.executeUpdate(sql);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			close();
-		}
-		
+	    open();
+	    String sql = "UPDATE product SET itemname = ?, maker = ?, price = ?, regdate = ? WHERE id = ?";
+	    
+	    try {
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setString(1, product.getItemname());
+	        pstmt.setString(2, product.getMaker());
+	        pstmt.setInt(3, product.getPrice());
+	        pstmt.setDate(4, product.getRegdate());
+	        pstmt.setInt(5, product.getId());
+	        
+	        pstmt.executeUpdate();
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        close();
+	    }
 	}
 
 	public Product find(String id) {
