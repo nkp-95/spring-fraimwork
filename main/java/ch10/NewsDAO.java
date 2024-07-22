@@ -11,13 +11,13 @@ import java.util.List;
 public class NewsDAO {
 	final String JDBC_DRIVER = "org.h2.Driver";
 	final String JDBC_URL = "jdbc:h2:tcp://localhost/~/jwbookdb";
+	
 	//DB 연결을 가져오는 메서드
 	public Connection open() {
 		Connection conn = null;
 		try {
 			Class.forName(JDBC_DRIVER);
 			conn = DriverManager.getConnection(JDBC_URL,"jwbook", "1234");
-;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -30,8 +30,8 @@ public class NewsDAO {
 		
 		List<News>newsList = new ArrayList<>();
 		
-		String sql = "select aid, title, FORMATDATETIME(date, 'yyyy-MM--dd hh:mm:ss') as cdate,";
-		sql = sql + "img, content from news";
+		String sql = "select aid, title, FORMATDATETIME(date, 'yyyy-MM-dd hh:mm:ss') as cdate,";
+		sql += "img, content from news";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
@@ -57,8 +57,8 @@ public class NewsDAO {
 		
 		News n = new News();
 		
-		String sql = "select aid, title, FORMATDATETIME(date, 'yyyy-MM--dd hh:mm:ss') as cdate,";
-		sql = sql + "img, content from news where aid = ?";
+		String sql = "select aid, title, FORMATDATETIME(date, 'yyyy--MM--dd hh:mm:ss') as cdate,";
+		sql += "img, content from news where aid = ?";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, aid);
@@ -83,7 +83,7 @@ public class NewsDAO {
 		Connection conn = open();
 		
 		String sql = "insert into news(title, img, date, content)";
-		sql += " values(?,?,current_timestemp(),?)";
+		sql += " values(?,?,current_timestamp(),?)";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
@@ -109,6 +109,5 @@ public class NewsDAO {
 				throw new SQLException("DB에러");
 			}
 		}
-		
 	}
 }

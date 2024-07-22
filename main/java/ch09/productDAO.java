@@ -91,9 +91,10 @@ public class productDAO {
 		
 	}
 	
-	public void update(Product product){
+	public void update(Product product, int newId){	//, int newId
 	    open();
 	    String sql = "UPDATE product SET itemname = ?, maker = ?, price = ?, regdate = ? WHERE id = ?";
+//	    String sql = "UPDATE product SET id=? itemname = ?, maker = ?, price = ?, regdate = ? WHERE id = ?";
 	    
 	    try {
 	        pstmt = conn.prepareStatement(sql);
@@ -138,5 +139,19 @@ public class productDAO {
 		}
 		return p;
 	}
+	
+	public void delProduct(int id) throws SQLException {
+		open();
+		String sql = "delete from product where id = ?";
+		
+		PreparedStatement pstmt = conn.prepareStatement(sql);
 
+		try(pstmt){
+			pstmt.setInt(1, id);
+			if(pstmt.executeUpdate() == 0) {
+				throw new SQLException("DB에러");
+			}
+		}
+		close();
+	}
 }

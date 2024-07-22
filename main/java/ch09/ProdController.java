@@ -1,15 +1,15 @@
 package ch09;
 
+import java.io.IOException;
+
+import org.apache.commons.beanutils.BeanUtils;
+
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-
-import org.apache.commons.beanutils.BeanUtils;
 
 @WebServlet("/prodControl")
 public class ProdController extends HttpServlet {
@@ -55,15 +55,20 @@ public class ProdController extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		dao.update(p);
+		int newId = Integer.parseInt(request.getParameter("newId"));
+		
+		
+		dao.update(p, newId);
 		
 		return "productInfo.jsp";
+//		return list(request, response);
 	}
 
 	//제품 리스트
 	private String list(HttpServletRequest request, HttpServletResponse response) {
 		request.setAttribute("products", dao.getAll());
 		return "productInfo.jsp";
+
 	}
 	
 	//제품 등록

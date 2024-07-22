@@ -80,4 +80,43 @@ public class StudentDAO {
 		
 		return students;
 	}
+	
+	//학생 상세 정보
+	public Student getStudent (int id) throws SQLException{
+		open();
+		Student s = new Student();
+		String sql = "select * from student where id = ?";
+		
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, id);
+		ResultSet rs = pstmt.executeQuery();
+		rs.next();
+		
+		try{
+			s.setId(rs.getInt("id"));
+			s.setUsername(rs.getString("username"));
+			s.setUniv(rs.getString("univ"));
+			s.setBirth(rs.getDate("birth"));
+			s.setEmail(rs.getString("email"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		close();
+		return s;
+	}
+	
+	public void delStudent(int id) throws SQLException{
+		open();
+		String sql = "delete from student where id = ?";
+		
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		try(pstmt){
+			pstmt.setInt(1, id);
+			if(pstmt.executeUpdate() == 0) {
+				throw new SQLException("DB에러");
+			}
+		}
+		close();
+	}
 }

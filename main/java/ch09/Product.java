@@ -9,7 +9,7 @@ public class Product {
 		private int price;
 		private Date regdate;
 		
-		public Product() {};  //디폴트 생성자
+		public Product(){};  //디폴트 생성자
 		
 		public Product(int id, String itemname, String maker, int price, Date regdate) {
 			super();

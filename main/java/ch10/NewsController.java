@@ -45,6 +45,9 @@ public class NewsController extends HttpServlet {
 	}
 	
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		System.out.println("####필터링 커치고 실행됨");//ch11 InCodingFilter 걸쳐서 옴
+		
 		request.setCharacterEncoding("utf-8");
 		String action = request.getParameter("action");
 		
@@ -113,10 +116,10 @@ public class NewsController extends HttpServlet {
 			return listNews(request);
 		}
 		
-		return "redirect:/news.nhn?action=listNews";
+		return "redirect:/news.nhn?action=listNews";	//리플렉션 기법 문자열을 코드로 인식
 	}
 	
-	private String listNews(HttpServletRequest request) {
+	public String listNews(HttpServletRequest request) {
 		List<News> list;
 		
 		try {
@@ -129,7 +132,7 @@ public class NewsController extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 			ctx.log("뉴스 목록 생성 과정에서 문제 발생!!!");
-			request.setAttribute("error", "뉴스가 정상적을 처리되지 않았습니다.");
+			request.setAttribute("error", "뉴스가 정상적으로 처리되지 않았습니다.");
 		}
 		
 		return "ch10/newsList.jsp";
@@ -169,13 +172,13 @@ public class NewsController extends HttpServlet {
 	//multipart 헤더에서 파일 이름 추출
 	private String getFilename(Part part) {
 		String fileName = null;
-		String header = part.getHeader("content_disposition");
+		String header = part.getHeader("content-disposition");
 		//part.getHeader  :  form-data: name="img" ; filename="뉴스사진1.jpg"
 		System.out.println("Header => " + header);
 		//파일 이름이 들어있는 속성부분의 시작위치를 가져와 큰따옴표 사이의 값 부분만 가지고 옴
 		int start = header.indexOf("filename=");
 		fileName = header.substring(start+10, header.length()-1);
-		ctx.log("파일명 " + fileName);
+		ctx.log("파일명: " + fileName);
 		return fileName;
 	}
 	
